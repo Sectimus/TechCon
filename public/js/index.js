@@ -5,7 +5,7 @@ function loadSessions() {
   //display the session data
   $.when(Session.loadAll(), $.ready).done(function(sessions) {
     console.log(sessions);
-    var template = $("#session_template").html();
+    var template = $("#sessions_template").html();
     $.each(sessions, function() {
       var html = $(Mustache.to_html(template, this));
       $("#contentWrapper").append(html);
@@ -17,7 +17,7 @@ function loadTalks() {
   //display the session data
   $.when(Talk.loadAll(), $.ready).done(function(talks) {
     console.log(talks);
-    var template = $("#session_template").html();
+    var template = $("#talks_template").html();
     $.each(talks, function() {
       var html = $(Mustache.to_html(template, this));
       $("#contentWrapper").append(html);

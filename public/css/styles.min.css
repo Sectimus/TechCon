@@ -14,4 +14,17 @@
   -webkit-transform: translateY(-10px);
           transform: translateY(-10px);
 }
+
+.card .over {
+  z-index: 2 !important;
+}
+
+.card .ratings {
+  min-width: 110px;
+  cursor: pointer;
+}
+
+.card .ratings *:hover {
+  color: gold;
+}
 /*# sourceMappingURL=styles.min.css.map */

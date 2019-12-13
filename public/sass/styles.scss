@@ -11,4 +11,16 @@
     background: darken(white, 5%);
     transform: translateY(-10px);
   }
+  .over {
+    z-index: 2 !important;
+  }
+  .ratings {
+    min-width: 110px;
+    cursor: pointer;
+    * {
+      &:hover {
+        color: gold;
+      }
+    }
+  }
 }

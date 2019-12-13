@@ -16,11 +16,15 @@
     <script src="/js/lib/popper.min.js"></script>
     <script src="/js/lib/bootstrap.min.js"></script>
     <script src="/js/lib/mustache.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/040a1a27b3.js"
+      crossorigin="anonymous"
+    ></script>
     <!--Imports-->
 
     <!--Modules-->
     <script type="module" src="/js/index.js"></script>
-    <script id="session_template" type="text/html">
+    <script id="sessions_template" type="text/html">
       <div class="col-sm-6 pb-4">
           <div class="card">
             <div class="card-body d-flex flex-column">
@@ -28,6 +32,38 @@
               <h4 class="card-text lead text-muted">
                 {{location}}
               </h4>
+              <a
+                href="#"
+                class="btn btn-outline-primary stretched-link text-center"
+                >View</a
+              >
+            </div>
+          </div>
+        </div>
+    </script>
+    <script id="talks_template" type="text/html">
+      <div class="col-sm-6 pb-4">
+          <div class="card">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{title}}</h5>
+              <h4 class="card-text lead text-muted">
+                {{session}}
+              </h4>
+              <div metadata class="d-flex justify-content-between over">
+                <div class="tags flex-wrap">
+                  {{#tags}}
+                  <span><a href="/view/talks/tags/{{.}}" class="badge badge-primary">{{.}}</a></span>
+                  {{/tags}}
+                </div>
+                <div class="ratings"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+              </div>
+              <p class="card-text">{{description}}</p>
               <a
                 href="#"
                 class="btn btn-outline-primary stretched-link text-center"
