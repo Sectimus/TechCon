@@ -1,25 +1,14 @@
 @import "includes/mixins.scss";
 
 * {
-    margin: 0;
-    padding: 0;
-    font-family: "montserrat",sans-serif;
-  }
-body{
-    color: red;
+  margin: 0;
+  padding: 0;
+  font-family: "montserrat", sans-serif;
 }
-.container {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    @include min-md{
-        width: 750px;
-    }
-    @include min-lg{
-        width: 992px;
-    }
-    @include min-xl{
-        width: 1170px;
-    }
+.card {
+  transition: 250ms;
+  &:hover {
+    background: darken(white, 5%);
+    transform: translateY(-10px);
   }
+}

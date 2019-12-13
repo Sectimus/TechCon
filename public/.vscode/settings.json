@@ -1,0 +1,21 @@
+{
+    "editor.multiCursorModifier":"ctrlCmd",
+    "liveSassCompile.settings.formats":[
+       {
+           "format": "expanded",
+           "extensionName": ".min.css",
+           "savePath": "/css"
+       },
+   ],
+   "liveSassCompile.settings.excludeList": [
+      "**/node_modules/**",
+      ".vscode/**",
+      ".git/**",
+      "**/sass/includes/**"
+   ],
+   "liveSassCompile.settings.generateMap": true,
+   "liveSassCompile.settings.autoprefix": [
+       "> 1%",
+       "last 2 versions"
+   ]
+}
