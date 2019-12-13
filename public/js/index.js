@@ -13,6 +13,18 @@ function loadSessions() {
   });
 }
 
+function loadTalks() {
+  //display the session data
+  $.when(Talk.loadAll(), $.ready).done(function(talks) {
+    console.log(talks);
+    var template = $("#session_template").html();
+    $.each(talks, function() {
+      var html = $(Mustache.to_html(template, this));
+      $("#contentWrapper").append(html);
+    });
+  });
+}
+
 $(document).ready(function() {
   var t = new Talk(
     1,
@@ -31,3 +43,4 @@ $(document).ready(function() {
 });
 
 //loadSessions();
+loadTalks();
