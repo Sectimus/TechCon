@@ -21,10 +21,33 @@
 
 .card .ratings {
   min-width: 110px;
+  display: inline-block;
+  position: relative;
   cursor: pointer;
 }
 
-.card .ratings *:hover {
+.card .ratings .star.star-under {
+  color: #ddd;
+  vertical-align: top;
+  position: relative;
+}
+
+.card .ratings .star.star-under:hover > .star-over {
   color: gold;
+}
+
+.card .ratings .star.star-under:hover {
+  color: gold;
+}
+
+.card .ratings .star.star-over {
+  -webkit-transition: 100ms;
+  transition: 100ms;
+  color: #f80;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0%;
+  overflow: hidden;
 }
 /*# sourceMappingURL=styles.min.css.map */

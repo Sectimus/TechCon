@@ -16,10 +16,32 @@
   }
   .ratings {
     min-width: 110px;
+    display: inline-block;
+    position: relative;
     cursor: pointer;
-    * {
-      &:hover {
-        color: gold;
+    .star {
+      &.star-under {
+        color: #ddd;
+        vertical-align: top;
+        position: relative;
+        @mixin starhover {
+          color: gold;
+        }
+        &:hover > .star-over {
+          @include starhover;
+        }
+        &:hover {
+          @include starhover;
+        }
+      }
+      &.star-over {
+        transition: 100ms;
+        color: #f80;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0%;
+        overflow: hidden;
       }
     }
   }

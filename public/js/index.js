@@ -19,7 +19,38 @@ function loadTalks() {
     console.log(talks);
     var template = $("#talks_template").html();
     $.each(talks, function() {
+      //check average ratings
+      let average = (function getAverage(set) {
+        let total = 0;
+        for (let i = 0; i < set.length; i++) {
+          total += parseInt(set[i]);
+        }
+        var avg = total / set.length;
+        if (!total) {
+          return 0;
+        } else {
+          return avg;
+        }
+      })(this.ratings);
+      var filledStars = Math.floor(average * 1) / 1;
+      var partialStar = parseFloat((average % 1).toFixed(2)) * 100;
+
       var html = $(Mustache.to_html(template, this));
+      //set each star width
+      (function fillStars() {
+        let filledPartial = false;
+        html.find(".star-over").each(function() {
+          let starNum = $(this).attr("star");
+          if (filledStars >= starNum) {
+            $(this).width("100%");
+          } else if (!filledPartial) {
+            $(this).width(partialStar + "%");
+            console.log(this);
+            filledPartial = true;
+          }
+        });
+      })();
+
       $("#contentWrapper").append(html);
     });
   });
