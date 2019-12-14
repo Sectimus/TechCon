@@ -42,20 +42,20 @@
         </div>
     </script>
     <script id="talks_template" type="text/html">
-      <div class="col-sm-6 pb-4">
+      <div talkid={{id}} class="col-md-6 pb-4">
           <div class="card">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{title}}</h5>
-              <h4 class="card-text lead text-muted">
-                {{session}}
+              <h4 class="over card-text lead">
+                <a class="card-text text-muted" href="/view/talks/speaker/{{speaker}}">{{speaker}}</a>
               </h4>
-              <div metadata class="d-flex justify-content-between over">
-                <div class="tags flex-wrap">
+              <div metadata class="d-flex justify-content-between">
+                <div class="tags flex-wrap over">
                   {{#tags}}
                   <span><a href="/view/talks/tags/{{.}}" class="badge badge-primary">{{.}}</a></span>
                   {{/tags}}
                 </div>
-                <div class="ratings"></i>
+                <div class="ratings over"></i>
                     <i star=1 class="star star-under far fa-star"><i star=1 class="star star-over fas fa-star"></i></i>
                     <i star=2 class="star star-under far fa-star"><i star=2 class="star star-over fas fa-star"></i></i>
                     <i star=3 class="star star-under far fa-star"><i star=3 class="star star-over fas fa-star"></i></i>

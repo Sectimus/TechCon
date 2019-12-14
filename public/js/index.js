@@ -1,6 +1,8 @@
 import Session from "./modules/session.js";
 import Talk from "./modules/talk.js";
 
+var talks;
+
 function loadSessions() {
   //display the session data
   $.when(Session.loadAll(), $.ready).done(function(sessions) {
@@ -15,8 +17,9 @@ function loadSessions() {
 
 function loadTalks() {
   //display the session data
-  $.when(Talk.loadAll(), $.ready).done(function(talks) {
-    console.log(talks);
+  $.when(Talk.loadAll(), $.ready).done(function(data_talks) {
+    //setup talks global
+    talks = data_talks;
     var template = $("#talks_template").html();
     $.each(talks, function() {
       //check average ratings
@@ -45,10 +48,26 @@ function loadTalks() {
             $(this).width("100%");
           } else if (!filledPartial) {
             $(this).width(partialStar + "%");
-            console.log(this);
             filledPartial = true;
           }
         });
+      })();
+      //set each star click handler to rate
+      (function setupRatingHandlers() {
+        html
+          .find(".ratings")
+          .children()
+          .each(function() {
+            //click function
+            $(this).on("click", function() {
+              var star = $(this);
+              var rating = star.attr("star");
+              //get the talk by using the mustache filled talk id to index into the talks global
+              var talk = talks[star.closest("[talkid]").attr("talkid") - 1];
+
+              talk.rate(rating);
+            });
+          });
       })();
 
       $("#contentWrapper").append(html);

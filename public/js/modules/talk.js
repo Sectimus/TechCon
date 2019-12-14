@@ -41,6 +41,21 @@ export default class Talk {
     });
   }
 
+  rate(rating) {
+    var url = "/talks/rate/" + this.id + "/" + rating + "/";
+
+    $.ajax({
+      url: url,
+      method: "GET",
+      success: function(data) {
+        console.log("done");
+      },
+      error: function(a, b, c) {
+        alert("Error rating talk");
+      }
+    });
+  }
+
   get id() {
     return this._id;
   }
@@ -95,9 +110,5 @@ export default class Talk {
   }
   set ratings(ratings) {
     this._ratings = ratings;
-  }
-
-  rate(rating) {
-    this._ratings.push(rating);
   }
 }
