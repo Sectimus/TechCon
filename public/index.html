@@ -73,6 +73,14 @@
           </div>
         </div>
     </script>
+    <script id="loader_template" type="text/html">
+      <div class="col-md-3"></div>
+      <div class="col-12 col-md-6 text-center">
+        <div class="spinner-border text-primary" role="status" style="width: 10rem; height: 10rem;"></div>
+        <h2>Loading {{pagename}}</h2>
+      </div>
+      <div class="col-md-3"></div>
+    </script>
     <!--Modules-->
   </head>
   <body class="container">
@@ -89,6 +97,9 @@
         </select>
       </form>
     </div>
+    <button id="test">
+      click
+    </button>
     <div id="contentWrapper" class="row"></div>
   </body>
 </html>
