@@ -16,11 +16,14 @@ function loadSessions() {
 }
 
 function loadTalks() {
+  return drawTalks(Talk.loadBySessionId("B"));
+}
+function drawTalks(talksPromise) {
   //create holding div to append to (only children are returned)
   var content = $("<div>");
   //return a promise that has the html generated for this page
   //this is executed when both the document is ready and talks have been loaded from the server
-  return $.when(Talk.loadAll(), $.ready)
+  return $.when(talksPromise, $.ready)
     .done(function(data_talks) {
       //setup talks global
       talks = data_talks;
@@ -83,7 +86,6 @@ function loadTalks() {
 
 $(document).ready(function() {
   $("#test").on("click", function() {
-    startSwitch("talks");
     switchPage("talks", loadTalks());
   });
 });
@@ -95,6 +97,7 @@ $(document).ready(function() {
 //takes a promise that child elements will be provided
 function switchPage(pagename, promise) {
   var animation = startSwitch(pagename);
+  //when the page data has loaded, animation completed and the document is ready
   $.when(promise, animation, $.ready).done(function(content) {
     endSwitch(content);
   });

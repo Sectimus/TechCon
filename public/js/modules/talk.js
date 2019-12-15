@@ -41,6 +41,37 @@ export default class Talk {
     });
   }
 
+  //returns a promise for loading all sessions that resolves with all session objects in an array
+  static loadBySessionId(session) {
+    return new Promise(function(resolve, reject) {
+      var url = "/talks/session/" + session;
+      $.ajax({
+        url: url,
+        method: "GET",
+        success: function(data) {
+          var talks = [];
+          data.forEach(talk => {
+            var obj = new Talk(
+              talk.id,
+              talk.speaker,
+              talk.title,
+              talk.description,
+              talk.session,
+              talk.time,
+              talk.tags,
+              talk.ratings
+            );
+            talks.push(obj);
+          });
+          resolve(talks);
+        },
+        error: function(a, b, c) {
+          reject(Error([a, b, c]));
+        }
+      });
+    });
+  }
+
   rate(rating) {
     var url = "/talks/rate/" + this.id + "/" + rating + "/";
 
