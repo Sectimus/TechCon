@@ -9,6 +9,11 @@
     <!--Styles-->
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/styles.min.css" />
+    <link
+      href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
+      rel="stylesheet"
+      type="text/css"
+    />
     <!--Styles-->
 
     <!--Imports-->
@@ -16,10 +21,6 @@
     <script src="/js/lib/popper.min.js"></script>
     <script src="/js/lib/bootstrap.min.js"></script>
     <script src="/js/lib/mustache.min.js"></script>
-    <script
-      src="https://kit.fontawesome.com/040a1a27b3.js"
-      crossorigin="anonymous"
-    ></script>
     <!--Imports-->
 
     <!--Modules-->
@@ -44,24 +45,44 @@
     <script id="talks_template" type="text/html">
       <div talkid={{id}} class="col-md-6 pb-4">
           <div class="card">
+            <div class="bookmarks over">
+              <i class="bookmark bookmark-under far fa-bookmark float-right"><i active class="bookmark bookmark-over fas fa-bookmark"></i></i>
+            </div>
+
+
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{title}}</h5>
-              <h4 class="over card-text lead">
-                <a class="card-text text-muted" href="/view/talks/speaker/{{speaker}}">{{speaker}}</a>
-              </h4>
+
+              <div class="d-flex justify-content-start">
+                <h4 class="over card-text lead" style="display:inline-block; ">
+                  <a class="card-text text-muted" href="/view/talks/speaker/{{speaker}}">{{speaker}}</a>
+                </h4>
+              </div>
+
               <div metadata class="d-flex justify-content-between">
-                <div class="tags flex-wrap over">
+                <div class="tags flex-wrap d-flex">
                   {{#tags}}
-                  <span><a href="/view/talks/tags/{{.}}" class="badge badge-primary">{{.}}</a></span>
+                  <span class="over h-25 px-1"><a href="/view/talks/tags/{{.}}" class="badge badge-primary tag">{{.}}</a></span>
                   {{/tags}}
+                  <span class="new over h-25 px-1">
+                    <form for="newtags" action="/talks/tag/{{id}}" method="post" style="display:none;">
+                      <input type="text" class="form-control" name="tag" placeholder="tag">
+                    </form>
+                    <i class="far fa-plus-square icon"></i>
+                  </span>
                 </div>
-                <div class="ratings over"></i>
+
+                <div>
+                  <div class="ratings over">
                     <i star=1 class="star star-under far fa-star"><i star=1 class="star star-over fas fa-star"></i></i>
                     <i star=2 class="star star-under far fa-star"><i star=2 class="star star-over fas fa-star"></i></i>
                     <i star=3 class="star star-under far fa-star"><i star=3 class="star star-over fas fa-star"></i></i>
                     <i star=4 class="star star-under far fa-star"><i star=4 class="star star-over fas fa-star"></i></i>
                     <i star=5 class="star star-under far fa-star"><i star=5 class="star star-over fas fa-star"></i></i>
                 </div>
+                <p class="m-0 text-right"><small>{{time}}</small></p>
+                </div>
+
               </div>
               <p class="card-text">{{description}}</p>
               <a

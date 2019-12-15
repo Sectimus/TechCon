@@ -16,7 +16,7 @@ function loadSessions() {
 }
 
 function loadTalks() {
-  return drawTalks(Talk.loadBySessionId("B"));
+  return drawTalks(Talk.loadAll());
 }
 function drawTalks(talksPromise) {
   //create holding div to append to (only children are returned)
@@ -75,6 +75,48 @@ function drawTalks(talksPromise) {
                 talk.rate(rating);
               });
             });
+        })();
+        //set the submission handler for new tags
+        (function setupNewTags() {
+          let icon = html.find(".tags>.new>.icon");
+          let form = html.find("form[for='newtags']");
+          let newtagInput = form.find("[name='tag']");
+
+          newtagInput.on("input", function() {
+            var ctx = $("<canvas>")[0].getContext("2d");
+            let thisJ = $(this);
+            var font = thisJ.css("font-size") + " " + thisJ.css("font-family");
+            ctx.font = font;
+
+            this.style.width = ctx.measureText(this.value).width + 26 + "px";
+          });
+          icon.on("click", function() {
+            $(this).hide();
+            html.find("form[for='newtags']").show();
+          });
+
+          //click data is logged in html, only js handler is setup due to refresh issue
+          form.on("submit", function(test) {
+            test.preventDefault();
+
+            let url = form.attr("action");
+            let method = form.attr("method");
+            let formdata = form.serializeArray()[0];
+            let data = {};
+            data[formdata.name] = formdata.value;
+
+            $.ajax({
+              method: method,
+              url: url,
+              data: data,
+              dataType: "application/json",
+              success: function(datas) {
+                console.log(datas);
+              }
+            });
+            form.hide();
+            icon.show();
+          });
         })();
         content.append(html);
       });
