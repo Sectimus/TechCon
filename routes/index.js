@@ -33,7 +33,7 @@ var talks = [
     description:
       "Understand the technical foundations, as well as the non-programming skills needed to be a successful full stack web developer. This book reveals the reasons why a truly successful full stack developer does more than write code. ",
     session: "A",
-    time: "12:0-13:00",
+    time: "12:00-13:00",
     tags: ["full-stack", "continuous delivery"],
     ratings: []
   },
@@ -89,7 +89,7 @@ var talks = [
     description:
       "Teaches you to build web servers using JavaScript and Node. In this engaging tutorial, we’ll work through eight complete projects, from writing the code for your first web server to adding live chat to a web app.  ",
     session: "B",
-    time: "12:0-13:00",
+    time: "12:00-13:00",
     tags: ["node"],
     ratings: []
   },
@@ -144,7 +144,7 @@ var talks = [
     description:
       "This session starts off with an introduction to JavaScript security and gives you an overview of the basic functions JavaScript can perform on the Web, both on the client side and the server side. It demonstrates a couple of ways in which RESTful APIs can be laden with security flaws. You will also create a simple RESTful server using Express.js and Node.js. You will then focus on one of the most common JavaScript security attacks, cross-site scripting, and how to prevent cross-site scripting and cross-site forgery.",
     session: "C",
-    time: "12:0-13:00",
+    time: "12:00-13:00",
     tags: ["CSS", "HTML5"],
     ratings: []
   },
