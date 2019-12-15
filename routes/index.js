@@ -291,4 +291,20 @@ router.get("/sessions", function(req, res) {
   res.send(sessions);
 });
 
+//get session by id
+router.get("/sessions/:id", function(req, res) {
+  var id = req.params["id"];
+  var session = sessions.find(x => x.id == id);
+  res.status(200);
+  res.send(session);
+});
+
+//get talks by sessionid
+router.get("/talks/session/:id", function(req, res) {
+  var id = req.params["id"];
+  var talksArray = talks.filter(x => x.session == id);
+  res.status(200);
+  res.send(talksArray);
+});
+
 module.exports = router;
