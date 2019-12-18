@@ -93,7 +93,12 @@ function drawTalks(talksPromise) {
             this.style.width = ctx.measureText(this.value).width + 26 + "px";
           });
           icon.on("click", function() {
+            //reset other form elements
+            $("form[for='newtags']").hide();
+            $(".tags>.new>.icon").show();
             $(this).hide();
+            //reset the form
+            html.find("form[for='newtags']>[name='tag']").val("");
             html.find("form[for='newtags']").show();
           });
 

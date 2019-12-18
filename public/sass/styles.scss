@@ -33,6 +33,9 @@ $primary: #007bff;
         font-size: large;
       }
     }
+    & > .new {
+      height: 24px !important;
+    }
   }
   .bookmarks {
     cursor: pointer;

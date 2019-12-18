@@ -61,9 +61,9 @@
               <div metadata class="d-flex justify-content-between">
                 <div class="tags flex-wrap d-flex">
                   {{#tags}}
-                  <span class="over h-25 px-1"><a href="/view/talks/tags/{{.}}" class="badge badge-primary tag">{{.}}</a></span>
+                  <span class="over px-1"><a href="/view/talks/tags/{{.}}" class="badge badge-primary tag">{{.}}</a></span>
                   {{/tags}}
-                  <span class="new over h-25 px-1">
+                  <span class="new over px-1">
                     <form for="newtags" action="/talks/tag/{{id}}" method="post" style="display:none;">
                       <input type="text" class="form-control" name="tag" placeholder="tag">
                     </form>
