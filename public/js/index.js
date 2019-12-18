@@ -1,5 +1,6 @@
 import Session from "./modules/session.js";
 import Talk from "./modules/talk.js";
+import Bookmarks from "./modules/bookmarks.js";
 
 var talks;
 
@@ -29,6 +30,7 @@ function drawTalks(talksPromise) {
       talks = data_talks;
       var template = $("#talks_template").html();
       $.each(talks, function() {
+        let talk = this;
         //check average ratings
         let average = (function getAverage(set) {
           let total = 0;
@@ -118,6 +120,33 @@ function drawTalks(talksPromise) {
             icon.show();
           });
         })();
+        //set up the currently set bookmarks
+        (function setupBookmarks() {
+          //setup the display of bookmarks
+          var bookmarks = Bookmarks.get();
+          if (bookmarks.includes(talk.id)) {
+            html.find(".bookmark>.bookmark-over").attr("active", "");
+          }
+          //setup the listener and handler of bookmarks
+          html.find(".bookmarks>.bookmark-under").on("click", function() {
+            //find out if this bookmark is triggered
+            let inner = $(this).find(".bookmark-over");
+            let activated = inner.attr("active") != null;
+
+            let id = html.closest("[talkid]").attr("talkid");
+
+            if (activated) {
+              //deactivate the bookmark
+              Bookmarks.remove(id);
+              html.find(".bookmark>.bookmark-over").removeAttr("active");
+            } else {
+              //activate the bookmark
+              Bookmarks.add(id);
+              html.find(".bookmark>.bookmark-over").attr("active", "");
+            }
+          });
+        })();
+
         content.append(html);
       });
     })

@@ -51,10 +51,6 @@ $primary: #007bff;
           @include hover;
           height: 100%;
         }
-        &:hover > .bookmark-over[active] {
-          @include hover;
-          height: 0%;
-        }
       }
       &.bookmark-over {
         width: 21px;
