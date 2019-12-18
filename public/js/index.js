@@ -117,8 +117,12 @@ function drawTalks(talksPromise) {
               url: url,
               data: data,
               dataType: "application/json",
-              success: function(datas) {
-                console.log(datas);
+              complete: function() {
+                let ele = $($("#talks_template").html())
+                  .find(".tags>.tag")
+                  .prop("outerHTML");
+                var tag = $(Mustache.to_html(ele, data.tag));
+                html.find(".tags>.tag:last").after(tag);
               }
             });
             form.hide();
