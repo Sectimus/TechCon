@@ -47,7 +47,7 @@
         </div>
     </script>
     <script id="talks_template" type="text/html">
-      <div talkid={{id}} class="col-md-6 pb-4">
+      <div talkid={{id}} class="col-md-6 pb-4 px-2">
           <div class="card">
             <div class="bookmarks over">
               <i class="bookmark bookmark-under far fa-bookmark float-right"><i class="bookmark bookmark-over fas fa-bookmark"></i></i>
@@ -95,7 +95,7 @@
               </div>
               <p class="card-text">{{description}}</p>
               <a
-                href="#"
+                href="/view/talk/{{id}}"
                 class="btn btn-outline-primary stretched-link text-center"
                 >View</a
               >
@@ -127,9 +127,6 @@
         </select>
       </form>
     </div>
-    <button id="test">
-      click
-    </button>
     <div id="contentWrapper" class="d-flex flex-wrap"></div>
   </body>
 </html>

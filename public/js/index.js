@@ -5,15 +5,25 @@ import Bookmarks from "./modules/bookmarks.js";
 var talks;
 
 function loadSessions() {
+  return drawSessions(Session.loadAll());
+}
+function drawSessions(sessionsPromise) {
   //display the session data
-  $.when(Session.loadAll(), $.ready).done(function(sessions) {
-    console.log(sessions);
-    var template = $("#sessions_template").html();
-    $.each(sessions, function() {
-      var html = $(Mustache.to_html(template, this));
-      $("#contentWrapper").append(html);
+
+  //create holding div to append to (only children are returned)
+  var content = $("<div>");
+  return $.when(sessionsPromise, $.ready)
+    .done(function(sessions) {
+      console.log(sessions);
+      var template = $("#sessions_template").html();
+      $.each(sessions, function() {
+        var html = $(Mustache.to_html(template, this));
+        content.append(html);
+      });
+    })
+    .then(function() {
+      return content.children();
     });
-  });
 }
 
 function loadTalks() {
@@ -191,16 +201,113 @@ function drawTalks(talksPromise) {
         content.append(html);
       });
     })
-    .then(function(asd) {
+    .then(function() {
       return content.children();
     });
 }
 
 $(document).ready(function() {
-  $("#test").on("click", function() {
-    switchPage("talks", loadTalks());
-  });
+  //setup popstate handler
+  $(window).on("popstate", e => loadByUrl());
+  //load the page by url
+  loadByUrl();
 });
+
+function loadByUrl() {
+  var url = window.location.pathname;
+
+  //build regex for matching page
+  var paths = [
+    {
+      name: "specific talk",
+      regex: new RegExp("^\\/view\\/talk\\/(?<id>\\d+)\\/?$", "gi")
+    },
+    {
+      name: "talks",
+      regex: new RegExp("^\\/view\\/talks\\/?$", "gi")
+    },
+    {
+      name: "sessions",
+      regex: new RegExp("^\\/view\\/sessions\\/?$", "gi")
+    }
+  ];
+  var matched = false;
+  paths.forEach(path => {
+    let result = url.match(path.regex);
+    if (result !== null) {
+      matched = { path: path, results: result.groups };
+    }
+  });
+
+  //if the page is matched by a path
+  if (matched) {
+    //switch the path
+    var page;
+    switch (matched.path.name) {
+      case "talks": {
+        var page = { promise: null, name: null };
+        page.promise = loadTalks();
+        page.name = "talks";
+        break;
+      }
+      case "talks": {
+        var page = { promise: null, name: null };
+        page.promise = loadTalks();
+        page.name = "talks";
+        break;
+      }
+      case "sessions": {
+        var page = { promise: null, name: null };
+        page.promise = loadSessions();
+        page.name = "sessions";
+        break;
+      }
+    }
+    if (page != undefined) {
+      switchPage(page.name, page.promise);
+    } else {
+      $("#contentWrapper").html("<h1>Error loading page</h1>");
+    }
+  } else {
+    $("#contentWrapper").html("<h1>Invalid page path</h1>");
+    //this page was not matched, return an error
+  }
+
+  /*
+  var page = (url => {
+    function isMatched(search) {
+      return (
+        url == search ||
+        url == search + "/" ||
+        url + "/" == search ||
+        url + "/" == search + "/"
+      );
+    }
+    switch (true) {
+      case isMatched("/"): {
+        $("#contentWrapper").html("<h1>HOME</h1>");
+        break;
+      }
+      case isMatched("/view/talks"): {
+        var o = { promise: null, name: null };
+        o.promise = loadTalks();
+        o.name = "talks";
+        return o;
+        break;
+      }
+      case isMatched("/view/talk/*"): {
+        $("#contentWrapper").html("<h1>GOT IT</h1>");
+        break;
+      }
+      default: {
+        $("#contentWrapper").html("<h1>Error loading page</h1>");
+        break;
+      }
+    }
+  })(url);
+  console.log(page);
+*/
+}
 
 //loadSessions();
 //loadTalks();
@@ -211,9 +318,28 @@ function switchPage(pagename, promise) {
   var animation = startSwitch(pagename);
   //when the page data has loaded, animation completed and the document is ready
   $.when(promise, animation, $.ready).done(function(content) {
+    //playground
+    //setup click handlers for the anchor links to implement SPA functionality
+    content.find("[href*='/view/']").on("click", function() {
+      let link = $(this).attr("href");
+      //push the new page state onto the history api
+      window.history.pushState({ page: "Test" }, null, link);
+
+      //cancel the default anchor link behaviour
+      return false;
+      //loadPage(page);
+    });
+    //playground
+
     //end the switch
     endSwitch(content);
   });
+}
+function startSwitch(pagename) {
+  var template = $("#loader_template").html();
+  var html = $(Mustache.to_html(template, { pagename: pagename }));
+  var animation = animationTransition(html);
+  return animation;
 }
 //show the loading pane
 function animationTransition(content) {
@@ -234,12 +360,6 @@ function animationTransition(content) {
       }
     )
     .promise();
-  return animation;
-}
-function startSwitch(pagename) {
-  var template = $("#loader_template").html();
-  var html = $(Mustache.to_html(template, { pagename: pagename }));
-  var animation = animationTransition(html);
   return animation;
 }
 //switch to the new content
