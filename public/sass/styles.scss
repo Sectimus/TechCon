@@ -12,18 +12,47 @@ $primary: #007bff;
     transform: translateY(-10px);
   }
   .tags {
-    form[for="newtags"] > .form-control {
+    .tag {
+      min-width: 0;
+      & > * {
+        max-width: 170px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+    }
+    form[for="newtags"] {
+      max-width: inherit;
+      & > .form-control {
+        min-width: 60px;
+        width: 60px;
+        max-width: 170px !important;
+        max-width: 100%;
+        height: 18px;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        background-color: $primary;
+        font-size: small;
+        color: white;
+        &::placeholder {
+          color: white;
+          opacity: 0.75;
+        }
+      }
+      [type="submit"] {
+        position: relative;
+        * {
+          position: absolute;
+          top: 4px;
+          left: 6px;
+        }
+      }
+    }
+    .input-group-append {
       min-width: 60px;
       width: 60px;
-      height: 18px;
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-      background-color: lighten($primary, 30%);
-      color: white;
-      &::placeholder {
-        color: white;
-        opacity: 0.75;
-      }
+      height: 26px;
     }
     .icon {
       cursor: pointer;
@@ -31,6 +60,7 @@ $primary: #007bff;
       &:hover {
         color: $primary;
         font-size: large;
+        padding-right: 0px;
       }
     }
     & > .new {
@@ -102,6 +132,12 @@ $primary: #007bff;
         width: 0%;
         overflow: hidden;
       }
+    }
+    .count {
+      position: absolute;
+      right: 0;
+      transform: translateY(-20px);
+      font-family: "Open Sans Condensed", sans-serif;
     }
   }
 }

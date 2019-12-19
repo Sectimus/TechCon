@@ -78,9 +78,6 @@ export default class Talk {
     $.ajax({
       url: url,
       method: "GET",
-      success: function(data) {
-        console.log("done");
-      },
       error: function(a, b, c) {
         alert("Error rating talk");
       }
