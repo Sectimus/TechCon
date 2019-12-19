@@ -113,20 +113,46 @@
     </script>
     <!--Modules-->
   </head>
-  <body class="container">
-    <h1>Temp header</h1>
-    <div class="row justify-content-end">
-      <form class="form-group float-right">
-        <label for="sortselector">Sort by:</label>
-        <select class="form-control" id="sortselector">
-          <option>Title: Ascending</option>
-          <option>Speaker</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </form>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbar10"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navigation">
+          <ul class="navbar-nav nav-fill w-100">
+            <li class="nav-item">
+              <a class="nav-link" href="/view/sessions">Browse Sessions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/view/talks">Browse Talks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/view/interesting">View Interesting</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row justify-content-end">
+        <form class="form-group float-right">
+          <label for="sortselector">Sort by:</label>
+          <select class="form-control" id="sortselector">
+            <option>Title: Ascending</option>
+            <option>Speaker</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </form>
+      </div>
+      <div id="contentWrapper" class="d-flex flex-wrap"></div>
     </div>
-    <div id="contentWrapper" class="d-flex flex-wrap"></div>
   </body>
 </html>

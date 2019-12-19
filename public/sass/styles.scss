@@ -5,6 +5,9 @@ $primary: #007bff;
   padding: 0;
   font-family: "montserrat", sans-serif;
 }
+body {
+  overflow-y: overlay;
+}
 .card {
   transition: 250ms;
   &:hover {

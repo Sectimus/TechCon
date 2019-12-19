@@ -4,6 +4,16 @@ import Bookmarks from "./modules/bookmarks.js";
 
 var talks;
 
+function anchorHandler(anchor) {
+  let link = $(anchor).attr("href");
+  //push the new page state onto the history api
+  window.history.pushState(null, null, link);
+  loadByUrl();
+  //cancel the default anchor link behaviour
+  return false;
+  //loadPage(page);
+}
+
 function loadSessions() {
   return drawSessions(Session.loadAll());
 }
@@ -14,7 +24,6 @@ function drawSessions(sessionsPromise) {
   var content = $("<div>");
   return $.when(sessionsPromise, $.ready)
     .done(function(sessions) {
-      console.log(sessions);
       var template = $("#sessions_template").html();
       $.each(sessions, function() {
         var html = $(Mustache.to_html(template, this));
@@ -209,6 +218,12 @@ function drawTalks(talksPromise) {
 $(document).ready(function() {
   //setup popstate handler
   $(window).on("popstate", e => loadByUrl());
+  //setup the navigation anchors
+  $("#navigation")
+    .find("[href*='/view/']")
+    .on("click", function() {
+      return anchorHandler(this);
+    });
   //load the page by url
   loadByUrl();
 });
@@ -321,13 +336,7 @@ function switchPage(pagename, promise) {
     //playground
     //setup click handlers for the anchor links to implement SPA functionality
     content.find("[href*='/view/']").on("click", function() {
-      let link = $(this).attr("href");
-      //push the new page state onto the history api
-      window.history.pushState({ page: "Test" }, null, link);
-
-      //cancel the default anchor link behaviour
-      return false;
-      //loadPage(page);
+      return anchorHandler(this);
     });
     //playground
 
