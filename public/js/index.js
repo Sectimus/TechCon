@@ -418,7 +418,6 @@ function setupFilters() {
                   }
                   case "ratinghigh":
                   case "ratinglow": {
-                    //if it is not the default value then do a sort
                     content.sort(function(a, b) {
                       let $a = $(a);
                       let $b = $(b);
@@ -430,6 +429,28 @@ function setupFilters() {
                     if (formdata.value == "ratinglow") {
                       content.reverse();
                     }
+                    break;
+                  }
+                  case "ratingmost":
+                  case "ratingleast": {
+                    content.sort(function(a, b) {
+                      let $a = $(a);
+                      let $b = $(b);
+
+                      let ratingsA = $a
+                        .find("[talk='ratings']")
+                        .text()
+                        .substr(1);
+                      let ratingsB = $b
+                        .find("[talk='ratings']")
+                        .text()
+                        .substr(1);
+                      return ratingsB - ratingsA;
+                    });
+                    if (formdata.value == "ratingleast") {
+                      content.reverse();
+                    }
+                    break;
                     break;
                   }
                 }
