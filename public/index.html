@@ -69,7 +69,7 @@
                 <div class="tags flex-wrap d-flex">
 
                   {{#tags}}
-                  <span class="tag over px-1"><a href="/view/talks/tags/{{.}}" class="badge badge-primary tag" data-toggle="tooltip" data-placement="top" title="{{.}}">{{.}}</a></span>
+                  <span class="tag over px-1"><a talk="tag" href="/view/talks/tags/{{.}}" class="badge badge-primary tag" data-toggle="tooltip" data-placement="top" title="{{.}}">{{.}}</a></span>
                   {{/tags}}
                   <span class="new over px-1">
                     <form class="input-group mb-3" for="newtags" action="/talks/tag/{{id}}" method="post" style="display:none;">

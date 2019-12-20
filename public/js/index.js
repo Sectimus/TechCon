@@ -303,6 +303,7 @@ $(document).ready(function() {
     });
   //load the page by url
   loadByUrl();
+  //setup the filters
   setupFilters();
 });
 
@@ -323,12 +324,6 @@ function setupFilters() {
     //check which filter is active
     switch (shownFilter.attr("filter")) {
       case "talks": {
-        //filter speaker
-
-        //filter session
-
-        //filter tags
-
         //sort by
         $(this)
           .serializeArray()
@@ -357,7 +352,36 @@ function setupFilters() {
               case "session": {
                 break;
               }
-              case "tag": {
+              case "tags": {
+                //if the tag is wanting to be searched
+                if (formdata.value) {
+                  //split the tags
+                  var tags = formdata.value.split(",");
+                  //for each element
+                  content.forEach(element => {
+                    element = $(element);
+                    var $tags = element.find("[talk='tag']");
+                    //for each tag element that is being searched
+                    var found = false;
+                    $tags.each(function() {
+                      //for each tag the user entered
+
+                      tags.forEach(tag => {
+                        if (
+                          $(this)
+                            .text()
+                            .toLowerCase()
+                            .trim() == tag.toLowerCase().trim()
+                        ) {
+                          found = true;
+                        }
+                      });
+                    });
+                    if (!found) {
+                      element.hide();
+                    }
+                  });
+                }
                 break;
               }
               case "sort": {
