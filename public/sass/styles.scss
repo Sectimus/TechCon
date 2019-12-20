@@ -5,6 +5,11 @@ $primary: #007bff;
   padding: 0;
   font-family: "montserrat", sans-serif;
 }
+.navbar-toggle {
+  width: 100%;
+  float: none;
+  margin-right: 0;
+}
 body {
   overflow-y: overlay;
 }
