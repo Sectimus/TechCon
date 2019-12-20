@@ -350,6 +350,19 @@ function setupFilters() {
                 break;
               }
               case "session": {
+                //if the session is specific
+                if (formdata.value != "any") {
+                  content.forEach(element => {
+                    element = $(element);
+                    let sessionid = element.attr("session");
+
+                    if (formdata.value == sessionid) {
+                      element.show();
+                    } else {
+                      element.hide();
+                    }
+                  });
+                }
                 break;
               }
               case "tags": {
@@ -509,6 +522,21 @@ function loadByUrl() {
         var page = { promise: null, name: null };
         page.promise = loadTalks();
         page.name = "talks";
+
+        //populate the sessions select
+        $.when(Session.loadAll()).done(function(sessions) {
+          $("#sessionselector").html("");
+          var anyopt = $("<option>")
+            .attr("value", "any")
+            .text("Any");
+          $("#sessionselector").append(anyopt);
+          sessions.forEach(session => {
+            var option = $("<option>")
+              .attr("value", session.id)
+              .text(session.title);
+            $("#sessionselector").append(option);
+          });
+        });
 
         //show filter options
         $("[filter='talks']").show();

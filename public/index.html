@@ -49,7 +49,7 @@
         </div>
     </script>
     <script id="talks_template" type="text/html">
-      <div talkid={{id}} class="col-md-6 pb-4 px-2">
+      <div talkid={{id}} session={{session}} class="col-md-6 pb-4 px-2">
           <div class="card">
             <div class="bookmarks over">
               <i class="bookmark bookmark-under far fa-bookmark float-right"><i class="bookmark bookmark-over fas fa-bookmark"></i></i>
@@ -158,13 +158,14 @@
             />
           </div>
           <div class="col-6 col-lg">
-            <label for="sessionelector">Session:</label>
-            <select class="form-control" id="sessionelector" name="session">
-              <option>Any</option>
-              <option>fill me</option>
-              <option>fill me</option>
-              <option>fill me</option>
-              <option>fill me</option>
+            <label for="sessionselector">Session:</label>
+            <select
+              class="form-control"
+              id="sessionselector"
+              name="session"
+              onchange="$('#filter').submit()"
+            >
+              <option value="any">Any</option>
             </select>
           </div>
           <div class="col-6 col-lg">
