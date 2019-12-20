@@ -10,7 +10,7 @@ export default class Talk {
     this._ratings = ratings;
   }
 
-  //returns a promise for loading all sessions that resolves with all session objects in an array
+  //returns a promise for loading all talks that resolves with all talk objects in an array
   static loadAll() {
     return new Promise(function(resolve, reject) {
       var url = "/talks/";
@@ -41,7 +41,7 @@ export default class Talk {
     });
   }
 
-  //returns a promise for loading all sessions that resolves with all session objects in an array
+  //returns a promise for loading all talks by sessionid that resolves with all talk objects in an array
   static loadBySessionId(session) {
     return new Promise(function(resolve, reject) {
       var url = "/talks/session/" + session;
@@ -64,6 +64,32 @@ export default class Talk {
             talks.push(obj);
           });
           resolve(talks);
+        },
+        error: function(a, b, c) {
+          reject(Error([a, b, c]));
+        }
+      });
+    });
+  }
+  //returns a promise for loading all talks by their id that resolves with all talk objects in an array
+  static loadById(talk) {
+    return new Promise(function(resolve, reject) {
+      var url = "/talks/" + talk;
+      $.ajax({
+        url: url,
+        method: "GET",
+        success: function(data) {
+          var talk = new Talk(
+            data[0].id,
+            data[0].speaker,
+            data[0].title,
+            data[0].description,
+            data[0].session,
+            data[0].time,
+            data[0].tags,
+            data[0].ratings
+          );
+          resolve(talk);
         },
         error: function(a, b, c) {
           reject(Error([a, b, c]));

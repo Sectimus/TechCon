@@ -1,13 +1,16 @@
 export default class Bookmarks {
-  static add(talkid) {
+  static add(talkid, time) {
     if (typeof Storage !== "undefined") {
       var bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
-      console.log(bookmarks);
 
       if (bookmarks == null) {
         bookmarks = [];
       }
-      bookmarks.push(talkid);
+      if (bookmarks.some(bookmark => bookmark.talkid === talkid)) {
+        //bookmark is already saved
+        return false;
+      }
+      bookmarks.push({ talkid: talkid, time: time });
       localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
       return true;
     } else {
@@ -23,7 +26,7 @@ export default class Bookmarks {
       var removedOne = false;
 
       for (let i = 0; i < bookmarks.length; i++) {
-        if (talkid == bookmarks[i]) {
+        if (talkid == bookmarks[i].talkid) {
           bookmarks.splice(i, 1);
           removedOne = true;
         }

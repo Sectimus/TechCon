@@ -11,7 +11,7 @@ var talks = [
     description:
       "The practice of enterprise application development has benefited from the emergence of many new enabling technologies. Multi-tiered object-oriented platforms, such as Java and .NET, have become commonplace. These new tools and technologies are capable of building powerful applications, but they are not easily implemented. Common failures in enterprise applications often occur because their developers do not understand the architectural lessons that experienced object developers have learned.",
     session: "A",
-    time: "9:00-10:00",
+    time: "09:00-10:00",
     tags: ["patterns", "archtecture"],
     ratings: []
   },
@@ -22,7 +22,7 @@ var talks = [
     description:
       "This talk is both an example-driven programmer's guide and a keep-on-your-desk reference, with new example that explain everything you need to know to get the most out of JavaScript.",
     session: "A",
-    time: "10:30-11:30",
+    time: "09:30-11:30",
     tags: ["javascript", "es6"],
     ratings: []
   },
@@ -66,7 +66,7 @@ var talks = [
     description:
       "Teaches you how to build web applications with Angular and TypeScript. Delivered in an accessible, lively style, this illuminating session covers core concerns like state management, data, forms, and server communication as you build a full-featured online auction app. You’ll get the skills you need to write type-aware classes, interfaces, and generics with TypeScript, and discover time-saving best practices to use in your own work ",
     session: "B",
-    time: "9:00-10:00",
+    time: "09:00-10:00",
     tags: ["javascript", "frameworks", "angular"],
     ratings: []
   },
@@ -122,7 +122,7 @@ var talks = [
     description:
       "Sass Essentials is a fast-paced, hands-on guide that breaks down the mysteries of preprocessing CSS styles using the Sass preprocessor and shows you how you can apply simple techniques to quickly and efficiently create CSS style sheets.",
     session: "C",
-    time: "9:00-10:00",
+    time: "09:00-10:00",
     tags: ["CSS", "Sass"],
     ratings: []
   },

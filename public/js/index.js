@@ -1,6 +1,8 @@
 import Session from "./modules/session.js";
 import Talk from "./modules/talk.js";
 import Bookmarks from "./modules/bookmarks.js";
+//init moment-range
+window["moment-range"].extendMoment(moment);
 
 var talks;
 
@@ -178,7 +180,7 @@ function drawTalks(talksPromise) {
       function fillBookmarks(html, talk) {
         //setup the display of bookmarks
         var bookmarks = Bookmarks.get();
-        if (bookmarks.includes(talk.id)) {
+        if (bookmarks.some(bookmark => bookmark.talkid === talk.id)) {
           html.find(".bookmark>.bookmark-over").attr("active", "");
         }
         //setup the listener and handler of bookmarks
@@ -187,7 +189,8 @@ function drawTalks(talksPromise) {
           let inner = $(this).find(".bookmark-over");
           let activated = inner.attr("active") != null;
 
-          let id = html.closest("[talkid]").attr("talkid");
+          let id = talk.id;
+          let time = talk.time;
 
           if (activated) {
             //deactivate the bookmark
@@ -195,8 +198,80 @@ function drawTalks(talksPromise) {
             html.find(".bookmark>.bookmark-over").removeAttr("active");
           } else {
             //activate the bookmark
-            Bookmarks.add(id);
-            html.find(".bookmark>.bookmark-over").attr("active", "");
+
+            //but first check if this time is already booked
+
+            //setup the times
+            let reqArr = talk.time.split("-");
+            let reqStart = moment(reqArr[0], "HH:mm:ss");
+            let reqEnd = moment(reqArr[1], "HH:mm:ss");
+            let reqRange = moment.range(reqStart, reqEnd);
+
+            //go through each timeSegment and see if it overlaps with the currently requested one
+            console.log(Bookmarks.get());
+
+            var overlaps = false;
+            Bookmarks.get().forEach(bookmark => {
+              let arr = bookmark.time.split("-");
+              let start = moment(arr[0], "HH:mm:ss");
+              let end = moment(arr[1], "HH:mm:ss");
+              let range = moment.range(start, end);
+
+              if (reqRange.overlaps(range)) {
+                //the time overlaps
+                if (!overlaps) {
+                  //init array
+                  overlaps = [];
+                }
+                overlaps.push(bookmark);
+              }
+            });
+            if (!overlaps) {
+              //this bookmark is valid to be added
+              Bookmarks.add(id, time);
+              html.find(".bookmark>.bookmark-over").attr("active", "");
+            } else {
+              //this bookmark overlaps with some others
+
+              //go through each overlaped talk and get the data
+              var overlapedTalkPromises = [];
+              overlaps.forEach(overlap => {
+                overlapedTalkPromises.push(Talk.loadById(overlap.talkid));
+              });
+              $.when(...overlapedTalkPromises).done(function(
+                ...overlappedTalkData
+              ) {
+                var description = "";
+                //setup the talk titles
+                for (let i = 0; i < overlappedTalkData.length; i++) {
+                  console.log(overlappedTalkData[i]);
+
+                  description +=
+                    i +
+                    1 +
+                    ": " +
+                    overlappedTalkData[i].title +
+                    " <small>" +
+                    overlappedTalkData[i].time +
+                    "</small>" +
+                    "<br />";
+                  console.log(description);
+                }
+
+                $(".popover").popover("dispose");
+                html
+                  .find(".bookmarks>.bookmark-under")
+                  .popover({
+                    title: "Talk times overlap",
+                    html: true,
+                    content: description
+                  })
+                  .popover("show");
+                setTimeout(() => {
+                  html.find(".bookmarks>.bookmark-under").popover("hide");
+                }, 3000);
+              });
+            }
           }
         });
         return html;
