@@ -57,7 +57,7 @@
 
 
             <div class="card-body d-flex flex-column pt-0">
-              <h5 class="card-title">{{title}}</h5>
+              <h5 talk="title" class="card-title">{{title}}</h5>
 
               <div class="d-flex justify-content-start">
                 <h4 class="over card-text lead pb-2" style="display:inline-block; ">
@@ -83,7 +83,7 @@
                 </div>
 
                 <div>
-                  <div class="ratings over">
+                  <div rating=0 class="ratings over">
                     <p class="count m-0 text-right">x{{ratings.length}}</p>
                     <i star=1 class="star star-under far fa-star"><i star=1 class="star star-over fas fa-star"></i></i>
                     <i star=2 class="star star-under far fa-star"><i star=2 class="star star-over fas fa-star"></i></i>
@@ -142,20 +142,61 @@
         </div>
       </div>
     </nav>
-    <div class="container">
-      <div class="row justify-content-end">
-        <form class="form-group float-right">
-          <label for="sortselector">Sort by:</label>
-          <select class="form-control" id="sortselector">
-            <option>Title: Ascending</option>
-            <option>Speaker</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-        </form>
-      </div>
-      <div id="contentWrapper" class="d-flex flex-wrap"></div>
+    <div class="container pt-2">
+      <form id="filter" class="justify-content-between form-group">
+        <div filter="talks" class="row" style="display:none;">
+          <div class="col-6 col-lg">
+            <label for="speakerinput">Speaker:</label>
+            <input
+              id="speakerinput"
+              type="text"
+              class="form-control"
+              placeholder="John Doe"
+              name="speaker"
+            />
+          </div>
+          <div class="col-6 col-lg">
+            <label for="sessionelector">Session:</label>
+            <select class="form-control" id="sessionelector" name="session">
+              <option>Any</option>
+              <option>fill me</option>
+              <option>fill me</option>
+              <option>fill me</option>
+              <option>fill me</option>
+            </select>
+          </div>
+          <div class="col-6 col-lg">
+            <label for="tagsinput"
+              >Tags: <small>(comma seperated)</small></label
+            >
+            <input
+              id="tagsinput"
+              type="text"
+              class="form-control"
+              placeholder="es6, react..."
+              name="tags"
+            />
+          </div>
+          <div class="col-6 col-lg">
+            <label for="sortselector">Sort by:</label>
+            <select
+              class="form-control"
+              id="sortselector"
+              name="sort"
+              onchange="$('#filter').submit()"
+            >
+              <option value="default">Default (by id)</option>
+              <option value="titleasc">Title: Ascending (A-Z)</option>
+              <option value="titledesc">Title: Decending (Z-A)</option>
+              <option value="ratinghigh">Rating: High to Low</option>
+              <option value="ratinglow">Rating: Low to High</option>
+            </select>
+          </div>
+        </div>
+        <input type="submit" value="Submit Button" style="display:none;" />
+      </form>
+      <hr />
+      <div id="contentWrapper" class="d-flex flex-wrap pt-1"></div>
     </div>
   </body>
 </html>

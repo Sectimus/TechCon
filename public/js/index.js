@@ -63,6 +63,8 @@ function drawTalks(talksPromise) {
           average = 0;
         }
 
+        //set the rating value
+        html.find("[rating]").attr("rating", average);
         //set each star width
         var filledStars = Math.floor(average * 1) / 1;
         var partialStar = parseFloat((average % 1).toFixed(2)) * 100;
@@ -301,7 +303,107 @@ $(document).ready(function() {
     });
   //load the page by url
   loadByUrl();
+  setupFilters();
 });
+
+function setupFilters() {
+  $("#filter").on("submit", function(e) {
+    e.preventDefault();
+    var shownFilter = $("[filter]:not([style='display:none;'])");
+
+    //make an array of the content in order
+    var content = $("#contentWrapper")
+      .children()
+      .toArray();
+    //check which filter is active
+    switch (shownFilter.attr("filter")) {
+      case "talks": {
+        //filter speaker
+
+        //filter session
+
+        //filter tags
+
+        //sort by
+        $(this)
+          .serializeArray()
+          .forEach(formdata => {
+            switch (formdata.name) {
+              case "speaker": {
+                break;
+              }
+              case "session": {
+                break;
+              }
+              case "tag": {
+                break;
+              }
+              case "sort": {
+                //check which sort option was selected
+                switch (formdata.value) {
+                  case "titleasc":
+                  case "titledesc":
+                  case "default": {
+                    //if it is not the default value then do a sort
+                    if (formdata.value != "default") {
+                      content.sort(function(a, b) {
+                        let $a = $(a);
+                        let $b = $(b);
+
+                        let titleA = $a.find("[talk='title']").text();
+                        let titleB = $b.find("[talk='title']").text();
+                        return titleA.localeCompare(titleB);
+                      });
+                      if (formdata.value == "titledesc") {
+                        content.reverse();
+                      }
+                    } else {
+                      //preserve the default state (sort by id)
+                      content.sort(function(a, b) {
+                        let $a = $(a);
+                        let $b = $(b);
+
+                        let idA = $a.attr("talkid");
+                        let idB = $b.attr("talkid");
+                        return idA - idB;
+                      });
+                    }
+                    break;
+                  }
+                  case "ratinghigh":
+                  case "ratinglow": {
+                    //if it is not the default value then do a sort
+                    content.sort(function(a, b) {
+                      let $a = $(a);
+                      let $b = $(b);
+
+                      let ratingA = $a.find("[rating]").attr("rating");
+                      let ratingB = $b.find("[rating]").attr("rating");
+                      return ratingB - ratingA;
+                    });
+                    if (formdata.value == "ratinglow") {
+                      content.reverse();
+                    }
+                    break;
+                  }
+                }
+                break;
+              }
+            }
+          });
+
+        break;
+      }
+    }
+    $("#contentWrapper").append(
+      $(
+        $.map(content, function(el) {
+          return $.makeArray(el);
+        })
+      )
+    );
+  });
+}
 
 function loadByUrl() {
   var url = window.location.pathname;
@@ -331,6 +433,8 @@ function loadByUrl() {
 
   //if the page is matched by a path
   if (matched) {
+    //hide the other filters
+    $("[filter]").hide();
     //switch the path
     var page;
     switch (matched.path.name) {
@@ -338,9 +442,12 @@ function loadByUrl() {
         var page = { promise: null, name: null };
         page.promise = loadTalks();
         page.name = "talks";
+
+        //show filter options
+        $("[filter='talks']").show();
         break;
       }
-      case "talks": {
+      case "talkss": {
         var page = { promise: null, name: null };
         page.promise = loadTalks();
         page.name = "talks";
