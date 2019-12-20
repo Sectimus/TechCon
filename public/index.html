@@ -105,6 +105,58 @@
           </div>
         </div>
     </script>
+    <script id="talk_template" type="text/html">
+      <div talkid={{id}} session={{session}} class="col">
+          <div class="card nohov">
+            <div class="bookmarks over">
+              <i class="bookmark bookmark-under far fa-bookmark float-right"><i class="bookmark bookmark-over fas fa-bookmark"></i></i>
+            </div>
+
+
+            <div class="card-body d-flex flex-column pt-0">
+              <h5 talk="title" class="card-title">{{title}}</h5>
+
+              <div class="d-flex justify-content-start">
+                <h4 class="over card-text lead pb-2" style="display:inline-block; ">
+                  <a talk="speaker" class="card-text text-muted" href="/view/talks/speaker/{{speaker}}">{{speaker}}</a>
+                </h4>
+              </div>
+
+              <div metadata class="d-flex justify-content-between">
+                <div class="tags flex-wrap d-flex">
+
+                  {{#tags}}
+                  <span class="tag over px-1"><a talk="tag" href="/view/talks/tags/{{.}}" class="badge badge-primary tag" data-toggle="tooltip" data-placement="top" title="{{.}}">{{.}}</a></span>
+                  {{/tags}}
+                  <span class="new over px-1">
+                    <form class="input-group mb-3" for="newtags" action="/talks/tag/{{id}}" method="post" style="display:none;">
+                      <input type="text" class="form-control" name="tag" placeholder="tag">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-success"><i class="far fa-save"></i></button>
+                      </div>
+                    </form>
+                    <i class="far fa-plus-square icon pr-1"></i>
+                  </span>
+                </div>
+
+                <div>
+                  <div rating=0 class="ratings over">
+                    <p talk="ratings" class="count m-0 text-right">x{{ratings.length}}</p>
+                    <i star=1 class="star star-under far fa-star"><i star=1 class="star star-over fas fa-star"></i></i>
+                    <i star=2 class="star star-under far fa-star"><i star=2 class="star star-over fas fa-star"></i></i>
+                    <i star=3 class="star star-under far fa-star"><i star=3 class="star star-over fas fa-star"></i></i>
+                    <i star=4 class="star star-under far fa-star"><i star=4 class="star star-over fas fa-star"></i></i>
+                    <i star=5 class="star star-under far fa-star"><i star=5 class="star star-over fas fa-star"></i></i>
+                  </div>
+                  <p class="m-0 text-right"><small>{{time}}</small></p>
+                </div>
+
+              </div>
+              <p class="card-text">{{description}}</p>
+            </div>
+          </div>
+        </div>
+    </script>
     <script id="loader_template" type="text/html">
       <div class="col-md-3"></div>
       <div class="col-12 col-md-6 text-center">
@@ -178,6 +230,7 @@
               class="form-control"
               placeholder="es6, react..."
               name="tags"
+              oninput="$('#filter').submit()"
             />
           </div>
           <div class="col-6 col-lg">
