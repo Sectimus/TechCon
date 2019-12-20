@@ -61,7 +61,7 @@
 
               <div class="d-flex justify-content-start">
                 <h4 class="over card-text lead pb-2" style="display:inline-block; ">
-                  <a class="card-text text-muted" href="/view/talks/speaker/{{speaker}}">{{speaker}}</a>
+                  <a talk="speaker" class="card-text text-muted" href="/view/talks/speaker/{{speaker}}">{{speaker}}</a>
                 </h4>
               </div>
 
@@ -153,6 +153,7 @@
               class="form-control"
               placeholder="John Doe"
               name="speaker"
+              oninput="$('#filter').submit()"
             />
           </div>
           <div class="col-6 col-lg">

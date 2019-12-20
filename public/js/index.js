@@ -315,6 +315,11 @@ function setupFilters() {
     var content = $("#contentWrapper")
       .children()
       .toArray();
+
+    //reset the view
+    content.forEach(element => {
+      $(element).show();
+    });
     //check which filter is active
     switch (shownFilter.attr("filter")) {
       case "talks": {
@@ -330,6 +335,23 @@ function setupFilters() {
           .forEach(formdata => {
             switch (formdata.name) {
               case "speaker": {
+                //if the speaker is wanting to be searched
+                if (formdata.value) {
+                  content.forEach(element => {
+                    element = $(element);
+                    let speaker = element.find("[talk='speaker']").text();
+
+                    if (
+                      speaker
+                        .toLowerCase()
+                        .includes(formdata.value.toLowerCase())
+                    ) {
+                      element.show();
+                    } else {
+                      element.hide();
+                    }
+                  });
+                }
                 break;
               }
               case "session": {
